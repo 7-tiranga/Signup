@@ -74,38 +74,29 @@
     /* MAIN */
     .content { max-width:1100px; margin:22px auto; padding:0 16px; text-align:center; }
     .title { font-size:26px; margin:8px 0 18px; color:#111; }
-    /* image gallery layout */
-    .image-gallery {
-      display:flex;
-      justify-content:center;
-      gap:18px;
-      flex-wrap:wrap;
-      margin-bottom:22px;
+
+    /* SCROLLING FEATURE IMAGES */
+    .scroll-gallery {
+      width:100%;
+      overflow:hidden;
+      margin:20px auto;
     }
-    .image-gallery img {
+    .scroll-track {
+      display:flex;
+      gap:18px;
+      animation: scrollLoop 25s linear infinite;
+    }
+    .scroll-track img {
       width:220px;
       height:150px;
       object-fit:cover;
       border-radius:10px;
       box-shadow:0 8px 20px rgba(0,0,0,.08);
-      backface-visibility:hidden;
-      will-change:transform, opacity;
     }
-
-     <!-- Scrolling Feature Images -->
-    <section class="image-gallery">
-      <div class="scroll-track">
-        <img src="https://i.imageupload.app/2098d2c8cf2916716778.jpeg" alt="Feature 1">
-        <img src="https://i.imageupload.app/1c36c7ccc38a0dc04a9b.jpeg" alt="Feature 2">
-        <img src="https://i.imageupload.app/9d244c9b34cd73f0ae15.jpeg" alt="Feature 3">
-        <img src="https://i.imageupload.app/c0b7613f7566167972ce.jpeg" alt="Feature 4">
-        <!-- duplicate for infinite loop -->
-        <img src="https://i.imageupload.app/2098d2c8cf2916716778.jpeg" alt="Feature 1">
-        <img src="https://i.imageupload.app/1c36c7ccc38a0dc04a9b.jpeg" alt="Feature 2">
-        <img src="https://i.imageupload.app/9d244c9b34cd73f0ae15.jpeg" alt="Feature 3">
-        <img src="https://i.imageupload.app/c0b7613f7566167972ce.jpeg" alt="Feature 4">
-      </div>
-    </section>
+    @keyframes scrollLoop {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
 
     .cta { margin: 12px 0 20px; }
     .btn {
@@ -137,7 +128,7 @@
     .site-footer a.btn { background:#fff; color:var(--accent); margin:6px; display:inline-block; }
 
     @media (max-width:740px){
-      .image-gallery img { width:45%; height:120px; }
+      .scroll-track img { width:45%; height:120px; }
       .payment-options img{ height:40px; }
     }
   </style>
@@ -166,12 +157,19 @@
   <main class="content" role="main">
     <h1 class="title">India’s Most Trusted Gaming Platform</h1>
 
-    <!-- FEATURE IMAGES (each has class float-img; JS will set delay) -->
-    <section class="image-gallery" aria-label="Feature images">
-      <img src="https://i.imageupload.app/2098d2c8cf2916716778.jpeg" alt="Feature 1" class="float-img">
-      <img src="https://i.imageupload.app/1c36c7ccc38a0dc04a9b.jpeg" alt="Feature 2" class="float-img">
-      <img src="https://i.imageupload.app/9d244c9b34cd73f0ae15.jpeg" alt="Feature 3" class="float-img">
-      <img src="https://i.imageupload.app/c0b7613f7566167972ce.jpeg" alt="Feature 4" class="float-img">
+    <!-- SCROLLING FEATURE IMAGES -->
+    <section class="scroll-gallery">
+      <div class="scroll-track">
+        <img src="https://i.imageupload.app/2098d2c8cf2916716778.jpeg" alt="Feature 1">
+        <img src="https://i.imageupload.app/1c36c7ccc38a0dc04a9b.jpeg" alt="Feature 2">
+        <img src="https://i.imageupload.app/9d244c9b34cd73f0ae15.jpeg" alt="Feature 3">
+        <img src="https://i.imageupload.app/c0b7613f7566167972ce.jpeg" alt="Feature 4">
+        <!-- duplicate for loop -->
+        <img src="https://i.imageupload.app/2098d2c8cf2916716778.jpeg" alt="Feature 1">
+        <img src="https://i.imageupload.app/1c36c7ccc38a0dc04a9b.jpeg" alt="Feature 2">
+        <img src="https://i.imageupload.app/9d244c9b34cd73f0ae15.jpeg" alt="Feature 3">
+        <img src="https://i.imageupload.app/c0b7613f7566167972ce.jpeg" alt="Feature 4">
+      </div>
     </section>
 
     <div class="cta">
@@ -229,27 +227,5 @@
     <a class="btn" href="Disclaimer.html">Disclaimer</a>
     <p style="margin-top:12px;font-weight:600;">© 2024 7 Tiranga Lottery PRIVATE LIMITED. All Rights Reserved.</p>
   </footer>
-
-  <!-- SMALL SCRIPT: set staggered animation delays for .float-img -->
-  <script>
-    (function(){
-      const imgs = Array.from(document.querySelectorAll('.float-img'));
-      imgs.forEach((img, i) => {
-        // stagger delay (0.25s gap)
-        const delay = (i * 0.25).toFixed(2) + 's';
-        img.style.setProperty('--delay', delay);
-        // optional slight staggered scale/tilt while entering
-        img.style.transformOrigin = 'center';
-      });
-
-      // Fallback: in very old browsers where CSS variables/animation-delay don't apply,
-      // add a tiny JS fallback to animate visibility sequentially.
-      if (!window.CSS || !CSS.supports || !CSS.supports('animation-name','floatIn')) {
-        imgs.forEach((img,i) => {
-          setTimeout(()=>{ img.style.opacity=1; img.style.transform='translateY(0)'; }, i*250 );
-        });
-      }
-    })();
-  </script>
 </body>
 </html>
