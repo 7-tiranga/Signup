@@ -1,157 +1,169 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>7 Tiranga Lottery</title>
-
-  <!-- ALL CSS IS INSIDE THIS <style> TAG -->
   <style>
-    :root {
-      --accent: #138808;
-      --cta: #ff6600;
-    }
-    * { box-sizing: border-box; }
+    /* ====== Global Styles ====== */
     body {
       margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
-      background: #f6f7f8;
+      font-family: Arial, sans-serif;
+      background: #f9f9f9;
       color: #222;
-      -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
+      line-height: 1.6;
+    }
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+    img {
+      max-width: 100%;
+      display: block;
+    }
+    .btn {
+      display: inline-block;
+      padding: 10px 20px;
+      margin: 5px;
+      background: #ff5722;
+      color: #fff;
+      border-radius: 5px;
+      transition: 0.3s;
+    }
+    .btn:hover {
+      background: #e64a19;
     }
 
-    /* NAV */
+    /* ====== Navbar ====== */
     .navbar {
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      padding:12px 18px;
-      background: linear-gradient(90deg,#ff9933,#ffb366);
-      position:sticky;
-      top:0;
-      z-index:100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #fff;
+      padding: 10px 20px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
-    .logo img{ height:52px; display:block; }
-    .rating { display:flex; align-items:center; gap:10px; }
-    .stars {
-      background:#fff;
-      color:var(--accent);
-      padding:6px 10px;
-      border-radius:20px;
-      font-weight:700;
-      font-size:14px;
+    .navbar .logo img {
+      height: 50px;
+    }
+    .rating {
+      display: flex;
+      align-items: center;
+      gap: 15px;
     }
     .dropbtn {
-      background:#fff;
-      color:var(--accent);
+      background: #ff5722;
+      color: #fff;
       border: none;
-      padding:8px 12px;
-      border-radius:6px;
-      cursor:pointer;
-      font-weight:700;
+      padding: 8px 12px;
+      cursor: pointer;
+      border-radius: 4px;
     }
-    .dropdown { position:relative; }
+    .dropdown {
+      position: relative;
+      display: inline-block;
+    }
     .dropdown-content {
-      display:none;
-      position:absolute;
-      right:0;
-      top:calc(100% + 8px);
-      background:#fff;
-      border-radius:8px;
-      box-shadow:0 8px 24px rgba(0,0,0,.12);
-      overflow:hidden;
-      min-width:140px;
+      display: none;
+      position: absolute;
+      right: 0;
+      background: #fff;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+      min-width: 150px;
+      z-index: 1000;
     }
     .dropdown-content a {
-      display:block;
-      padding:10px 12px;
-      text-decoration:none;
-      color:#222;
+      display: block;
+      padding: 10px;
+      border-bottom: 1px solid #eee;
     }
-    .dropdown:hover .dropdown-content{ display:block; }
+    .dropdown:hover .dropdown-content {
+      display: block;
+    }
 
-    /* MAIN */
-    .content { max-width:1100px; margin:22px auto; padding:0 16px; text-align:center; }
-    .title { font-size:26px; margin:8px 0 18px; color:#111; }
-    /* image gallery layout */
+    /* ====== Main Content ====== */
+    .content {
+      padding: 20px;
+      text-align: center;
+    }
+    .title {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
+    /* ====== Scrolling Feature Images ====== */
     .image-gallery {
-      display:flex;
-      justify-content:center;
-      gap:18px;
-      flex-wrap:wrap;
-      margin-bottom:22px;
+      width: 100%;
+      overflow: hidden;
+      background: #fff;
+      padding: 20px 0;
+      margin-bottom: 30px;
     }
-    .image-gallery img {
-      width:220px;
-      height:150px;
-      object-fit:cover;
-      border-radius:10px;
-      box-shadow:0 8px 20px rgba(0,0,0,.08);
-      backface-visibility:hidden;
-      will-change:transform, opacity;
+    .scroll-track {
+      display: flex;
+      width: calc(240px * 8); /* image width + margin * total images */
+      animation: scrollLoop 20s linear infinite;
     }
-
-    /* FLOATING ANIMATION: start hidden and move up into place */
-    .float-img {
-      opacity:0;
-      transform: translateY(36px) scale(.99);
-      /* animation uses custom delay var set by JS */
-      animation: floatIn 800ms cubic-bezier(.22,.9,.35,1) forwards;
-      animation-delay: var(--delay, 0s);
+    .scroll-track img {
+      width: 220px;
+      height: 150px;
+      margin: 0 10px;
+      border-radius: 10px;
+      object-fit: cover;
     }
-    @keyframes floatIn {
-      from { opacity: 0; transform: translateY(36px) scale(.99); }
-      to   { opacity: 1; transform: translateY(0) scale(1); }
+    @keyframes scrollLoop {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    /* Hover pause */
+    .image-gallery:hover .scroll-track {
+      animation-play-state: paused;
     }
 
-    .cta { margin: 12px 0 20px; }
-    .btn {
-      display:inline-block;
-      background:var(--accent);
-      color:#fff;
-      padding:12px 20px;
-      border-radius:10px;
-      text-decoration:none;
-      font-weight:700;
-      transition: transform .15s ease, box-shadow .15s ease;
+    /* ====== Sections ====== */
+    .cta {
+      margin: 20px 0;
     }
-    .btn:hover { transform: translateY(-2px); box-shadow:0 8px 20px rgba(0,0,0,.12); }
+    .payment-options img {
+      height: 50px;
+      margin: 10px;
+    }
+    .info, .why-choose, .membership, .follow-us {
+      margin: 30px 0;
+    }
+    .promo {
+      width: 100%;
+      border-radius: 10px;
+      margin: 20px 0;
+    }
+    .disclaimer {
+      background: #f1f1f1;
+      padding: 15px;
+      border-radius: 8px;
+      font-size: 14px;
+      margin: 20px 0;
+    }
 
-    .subtitle{ margin:18px 0 12px; font-size:18px; color:#333; }
-    .payment-options { display:flex; justify-content:center; gap:18px; align-items:center; flex-wrap:wrap; margin-bottom:18px; }
-    .payment-options img { height:46px; }
-
-    .info { background:#fff; padding:16px; border-radius:10px; margin:12px auto; max-width:900px; box-shadow:0 8px 24px rgba(0,0,0,.04); }
-    .link-box { margin:16px 0; display:flex; justify-content:center; gap:16px; flex-wrap:wrap; }
-    .link-box a { color:var(--accent); text-decoration:none; font-weight:700; }
-
-    .promo { width:100%; max-width:920px; border-radius:12px; margin:18px auto; display:block; }
-    .disclaimer { font-size:13px; color:#555; margin:14px auto; padding:12px; max-width:920px; background:#fff; border-radius:10px; }
-    .membership img { height:72px; margin:8px; border-radius:8px; object-fit:cover; }
-    .follow-us img { height:44px; }
-
-    .site-footer { background:linear-gradient(90deg,#ff9933,#ffb366); padding:18px 10px; color:#fff; text-align:center; margin-top:28px; border-radius:8px; }
-    .site-footer a.btn { background:#fff; color:var(--accent); margin:6px; display:inline-block; }
-
-    @media (max-width:740px){
-      .image-gallery img { width:45%; height:120px; }
-      .payment-options img{ height:40px; }
+    /* ====== Footer ====== */
+    .site-footer {
+      text-align: center;
+      padding: 20px;
+      background: #222;
+      color: #fff;
     }
   </style>
 </head>
 <body>
-  <!-- NAV -->
+  <!-- Navigation Bar -->
   <header class="navbar">
     <div class="logo">
       <img src="https://i.imageupload.app/64eeec7eb20e2067c9be.png" alt="7 Tiranga Logo">
     </div>
-
     <div class="rating">
       <span class="stars">⭐ 4.8 / 5</span>
       <div class="dropdown">
         <button class="dropbtn">Menu ▾</button>
-        <div class="dropdown-content" role="menu" aria-label="Site menu">
+        <div class="dropdown-content">
           <a href="#">Home</a>
           <a href="#">Games</a>
           <a href="#">Support</a>
@@ -160,94 +172,93 @@
     </div>
   </header>
 
-  <!-- MAIN -->
-  <main class="content" role="main">
+  <!-- Main Content -->
+  <main class="content">
     <h1 class="title">India’s Most Trusted Gaming Platform</h1>
 
-    <!-- FEATURE IMAGES (each has class float-img; JS will set delay) -->
-    <section class="image-gallery" aria-label="Feature images">
-      <img src="https://i.imageupload.app/2098d2c8cf2916716778.jpeg" alt="Feature 1" class="float-img">
-      <img src="https://i.imageupload.app/1c36c7ccc38a0dc04a9b.jpeg" alt="Feature 2" class="float-img">
-      <img src="https://i.imageupload.app/9d244c9b34cd73f0ae15.jpeg" alt="Feature 3" class="float-img">
-      <img src="https://i.imageupload.app/c0b7613f7566167972ce.jpeg" alt="Feature 4" class="float-img">
+    <!-- Scrolling Feature Images -->
+    <section class="image-gallery">
+      <div class="scroll-track">
+        <img src="https://i.imageupload.app/2098d2c8cf2916716778.jpeg" alt="Feature 1">
+        <img src="https://i.imageupload.app/1c36c7ccc38a0dc04a9b.jpeg" alt="Feature 2">
+        <img src="https://i.imageupload.app/9d244c9b34cd73f0ae15.jpeg" alt="Feature 3">
+        <img src="https://i.imageupload.app/c0b7613f7566167972ce.jpeg" alt="Feature 4">
+        <!-- duplicate for infinite loop -->
+        <img src="https://i.imageupload.app/2098d2c8cf2916716778.jpeg" alt="Feature 1">
+        <img src="https://i.imageupload.app/1c36c7ccc38a0dc04a9b.jpeg" alt="Feature 2">
+        <img src="https://i.imageupload.app/9d244c9b34cd73f0ae15.jpeg" alt="Feature 3">
+        <img src="https://i.imageupload.app/c0b7613f7566167972ce.jpeg" alt="Feature 4">
+      </div>
     </section>
 
+    <!-- Call to Action -->
     <div class="cta">
-      <a class="btn" href="https://citly.me/V0Lac" rel="noopener" target="_blank">Register Now</a>
+      <a href="https://citly.me/V0Lac" class="btn register">Register Now</a>
     </div>
 
     <h2 class="subtitle">Instant Withdraw Winnings</h2>
 
-    <section class="payment-options" aria-label="Payment options">
+    <!-- Payment Options -->
+    <section class="payment-options">
       <img src="https://i.imageupload.app/15a2431a883c37dce021.png" alt="Google Pay">
       <img src="https://i.imageupload.app/da327f685f098a60533a.jpeg" alt="PhonePe">
       <img src="https://i.imageupload.app/1fdb4ca688b399cff0db.png" alt="Paytm">
       <img src="https://i.imageupload.app/c3d9f0b45c29ab245df7.png" alt="BHIM">
     </section>
 
+    <!-- Info Section -->
     <section class="info">
       <h3>Our Players Trust 7 Tiranga Lottery</h3>
       <p>India’s Most Trusted Colour Prediction Gaming Platform</p>
     </section>
 
+    <!-- Links -->
     <div class="link-box">
       <a href="Disclaimer.html">Disclaimer</a>
       <a href="Privacy-Policy.html">Privacy Policy</a>
-      <a href="Terms-Conditions.html">Terms &amp; Conditions</a>
+      <a href="Terms-Conditions.html">Terms & Conditions</a>
     </div>
 
+    <!-- Why Choose -->
     <section class="why-choose">
       <h2>Why Choose 7 Tiranga Lottery</h2>
       <p>We are the world’s most trusted gaming platform—providing a ₹10 Crore prize pool.</p>
     </section>
 
-    <img class="promo" src="https://i.imageupload.app/d0a127e5febe83764409.jpeg" alt="Promo banner">
+    <!-- Promo Banner -->
+    <img src="https://i.imageupload.app/d0a127e5febe83764409.jpeg" alt="Promo Banner" class="promo">
 
+    <!-- Disclaimer -->
     <div class="disclaimer">
-      <p>Disclaimer: This website is only for 18+ users. If you are from Telangana, Orissa, Assam, Sikkim, or Nagaland, please leave immediately. We only promote fantasy sports. No real-money involvement. Copyright © 2024 7 Tiranga lottery</p>
+      <p>
+        Disclaimer: This website is only for 18+ users.
+        If you are from Telangana, Orissa, Assam, Sikkim, or Nagaland, please leave immediately.
+        We only promote fantasy sports. No real-money involvement.
+        Copyright © 2024 7 Tiranga lottery
+      </p>
     </div>
 
-    <section class="membership" aria-label="Membership and certifications">
-      <h2>Membership &amp; Certification</h2>
+    <!-- Membership & Certification -->
+    <section class="membership">
+      <h2>Membership & Certification</h2>
       <img src="https://i.imageupload.app/5a06859f0be269a6b13d.jpeg" alt="Certification 1">
       <img src="https://i.imageupload.app/977a711cc43e4caa5c13.jpeg" alt="Certification 2">
       <img src="https://i.imageupload.app/d825d72970d599286a42.jpeg" alt="Certification 3">
     </section>
 
+    <!-- Follow Us -->
     <section class="follow-us">
       <h2>Follow Us On</h2>
-      <img src="https://i.imageupload.app/4d127349a3fbe8abee01.png" alt="social">
+      <img src="https://i.imageupload.app/4d127349a3fbe8abee01.png" alt="Social Logo">
     </section>
   </main>
 
-  <!-- FOOTER -->
+  <!-- Footer -->
   <footer class="site-footer">
-    <a class="btn" href="https://citly.me/V0Lac" rel="noopener" target="_blank">Register Now</a>
-    <a class="btn" href="https://t.me/tirangaloginorg" rel="noopener" target="_blank">Join Telegram Channel</a>
-    <a class="btn" href="Disclaimer.html">Disclaimer</a>
-    <p style="margin-top:12px;font-weight:600;">© 2024 7 Tiranga Lottery PRIVATE LIMITED. All Rights Reserved.</p>
+    <a href="https://citly.me/V0Lac" class="btn">Register Now</a>
+    <a href="https://t.me/tirangaloginorg" class="btn">Join Telegram Channel</a>
+    <a href="Disclaimer.html" class="btn">Disclaimer</a>
+    <p>© 2024 7 Tiranga Lottery PRIVATE LIMITED. All Rights Reserved.</p>
   </footer>
-
-  <!-- SMALL SCRIPT: set staggered animation delays for .float-img -->
-  <script>
-    (function(){
-      const imgs = Array.from(document.querySelectorAll('.float-img'));
-      imgs.forEach((img, i) => {
-        // stagger delay (0.25s gap)
-        const delay = (i * 0.25).toFixed(2) + 's';
-        img.style.setProperty('--delay', delay);
-        // optional slight staggered scale/tilt while entering
-        img.style.transformOrigin = 'center';
-      });
-
-      // Fallback: in very old browsers where CSS variables/animation-delay don't apply,
-      // add a tiny JS fallback to animate visibility sequentially.
-      if (!window.CSS || !CSS.supports || !CSS.supports('animation-name','floatIn')) {
-        imgs.forEach((img,i) => {
-          setTimeout(()=>{ img.style.opacity=1; img.style.transform='translateY(0)'; }, i*250 );
-        });
-      }
-    })();
-  </script>
 </body>
 </html>
