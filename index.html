@@ -261,18 +261,29 @@
 </footer>
 
 <style>
+  body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
   .site-footer {
     background: #0a0a0a; /* Dark background */
     color: #fff;
     text-align: center;
-    padding: 25px 15px;
-    margin-top: 30px;
+    padding: 20px 15px;
     border-top: 2px solid #ffcc00;
     font-family: Arial, sans-serif;
+    margin-top: auto; /* Pushes footer to bottom */
+    position: sticky;
+    bottom: 0;
+    z-index: 1000;
   }
 
   .site-footer .footer-links {
-    margin-bottom: 15px;
+    margin-bottom: 10px;
   }
 
   .site-footer .btn {
@@ -293,7 +304,7 @@
   }
 
   .site-footer p {
-    margin-top: 12px;
+    margin-top: 8px;
     font-weight: 600;
     font-size: 14px;
     color: #ccc;
